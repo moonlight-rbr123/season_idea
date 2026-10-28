@@ -1,0 +1,164 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://skins/shared/TankSkin.gd" type="Script" id=1]
+[ext_resource path="res://skins/shared/TankBodyCommon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://gfx/neo/hoverbike-back.png" type="Texture" id=3]
+[ext_resource path="res://gfx/neo/hoverbike-back-t1.png" type="Texture" id=4]
+[ext_resource path="res://gfx/neo/hoverbike-back-t2.png" type="Texture" id=5]
+[ext_resource path="res://gfx/neo/turret-rail.png" type="Texture" id=6]
+[ext_resource path="res://gfx/neo/turret-rail-t1.png" type="Texture" id=7]
+[ext_resource path="res://gfx/neo/turret-rail-t2.png" type="Texture" id=8]
+[ext_resource path="res://gfx/neo/hoverbike-front.png" type="Texture" id=9]
+[ext_resource path="res://gfx/neo/hoverbike-front-t1.png" type="Texture" id=10]
+[ext_resource path="res://gfx/neo/hoverbike-front-t2.png" type="Texture" id=11]
+
+[sub_resource type="Animation" id=1]
+resource_name = "RESET"
+length = 0.001
+loop = false
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.9000, 0.9000 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -2.80 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "shoot"
+length = 0.35
+loop = false
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.9000, 0.9000 ), Vector2( 0.9630, 0.8460 ), Vector2( 0.9000, 0.9000 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "bob"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -2.80 ), Vector2( 0, -6.80 ), Vector2( 0, -2.80 ), Vector2( 0, -6.80 ), Vector2( 0, -2.80 ) ]
+}
+
+[node name="TankBody" type="Node2D"]
+
+z_index = 100
+script = ExtResource( 1 )
+_gun = NodePath("Body/Turret")
+_wheels = [  ]
+_tinted_nodes = [ NodePath("Body/BackT1"), NodePath("Body/Turret/TurretT1"), NodePath("Body/FrontT1") ]
+_tint2_nodes = [ NodePath("Body/BackT2"), NodePath("Body/Turret/TurretT2"), NodePath("Body/FrontT2") ]
+tint_one = Color( 0.101961, 0.784314, 1.000000, 1 )
+tint_two = Color( 0.039216, 0.372549, 0.721569, 1 )
+_drive_animation_player = NodePath("DriveAnim")
+_shoot_animation_player = NodePath("AnimationPlayer")
+card_offset = Vector2( 0, 24 )
+
+[node name="Body" type="Node2D" parent="."]
+
+position = Vector2( 0, -2.80 )
+scale = Vector2( 0.9000, 0.9000 )
+
+[node name="Back" type="Sprite" parent="Body"]
+
+texture = ExtResource( 3 )
+
+[node name="BackT1" type="Sprite" parent="Body"]
+
+self_modulate = Color( 0.101961, 0.784314, 1.000000, 1 )
+texture = ExtResource( 4 )
+
+[node name="BackT2" type="Sprite" parent="Body"]
+
+self_modulate = Color( 0.039216, 0.372549, 0.721569, 1 )
+texture = ExtResource( 5 )
+
+[node name="Turret" type="Sprite" parent="Body"]
+
+position = Vector2( -6, -50 )
+rotation = -0.785398
+centered = false
+offset = Vector2( -240, -70 )
+texture = ExtResource( 6 )
+
+[node name="TurretT1" type="Sprite" parent="Body/Turret"]
+
+self_modulate = Color( 0.101961, 0.784314, 1.000000, 1 )
+centered = false
+offset = Vector2( -240, -70 )
+texture = ExtResource( 7 )
+
+[node name="TurretT2" type="Sprite" parent="Body/Turret"]
+
+self_modulate = Color( 0.039216, 0.372549, 0.721569, 1 )
+centered = false
+offset = Vector2( -240, -70 )
+texture = ExtResource( 8 )
+
+[node name="Front" type="Sprite" parent="Body"]
+
+position = Vector2( -6, -50 )
+texture = ExtResource( 9 )
+
+[node name="FrontT1" type="Sprite" parent="Body"]
+
+position = Vector2( -6, -50 )
+self_modulate = Color( 0.101961, 0.784314, 1.000000, 1 )
+texture = ExtResource( 10 )
+
+[node name="FrontT2" type="Sprite" parent="Body"]
+
+position = Vector2( -6, -50 )
+self_modulate = Color( 0.039216, 0.372549, 0.721569, 1 )
+texture = ExtResource( 11 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+anims/RESET = SubResource( 1 )
+anims/shoot = SubResource( 2 )
+
+[node name="DriveAnim" type="AnimationPlayer" parent="."]
+
+autoplay = "bob"
+playback_speed = 0.0
+anims/bob = SubResource( 3 )
+
+[node name="TankBodyCommon" parent="." instance=ExtResource( 2 )]
+
+z_as_relative = false
+

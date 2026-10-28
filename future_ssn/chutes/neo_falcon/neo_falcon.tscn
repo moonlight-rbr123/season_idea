@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://skins/parachutes/Parachute.gd" type="Script" id=1]
+[ext_resource path="res://gfx/neo/chute-hub.png" type="Texture" id=2]
+[ext_resource path="res://gfx/neo/chute-falcon-inner.png" type="Texture" id=3]
+[ext_resource path="res://gfx/neo/chute-falcon-inner-t.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "flap"
+length = 0.65
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("WingR:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.0, 0.0542, 0.1083, 0.1625, 0.2167, 0.2708, 0.325, 0.3792, 0.4333, 0.4875, 0.5417, 0.5958, 0.65 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ -35.0, -30.646, -18.75, -2.5, 13.75, 25.646, 30.0, 25.646, 13.75, -2.5, -18.75, -30.646, -35.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("WingL:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.0, 0.0542, 0.1083, 0.1625, 0.2167, 0.2708, 0.325, 0.3792, 0.4333, 0.4875, 0.5417, 0.5958, 0.65 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 35.0, 30.646, 18.75, 2.5, -13.75, -25.646, -30.0, -25.646, -13.75, 2.5, 18.75, 30.646, 35.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "RESET"
+length = 0.001
+
+[node name="FalconPlume" type="Node2D"]
+
+script = ExtResource( 1 )
+_tinted_nodes = [ NodePath("WingR/WingRT"), NodePath("WingL/WingLT") ]
+
+[node name="WingR" type="Sprite" parent="."]
+
+position = Vector2( 48, 0 )
+rotation_degrees = -35
+scale = Vector2( 1.35, 1.35 )
+texture = ExtResource( 3 )
+
+[node name="WingRT" type="Sprite" parent="WingR"]
+
+self_modulate = Color( 0, 0.9, 1, 1 )
+texture = ExtResource( 4 )
+
+[node name="HubR" type="Sprite" parent="."]
+
+position = Vector2( 48, 0 )
+texture = ExtResource( 2 )
+
+[node name="WingL" type="Sprite" parent="."]
+
+position = Vector2( -48, 0 )
+rotation_degrees = 35
+scale = Vector2( -1.35, 1.35 )
+texture = ExtResource( 3 )
+
+[node name="WingLT" type="Sprite" parent="WingL"]
+
+self_modulate = Color( 0, 0.9, 1, 1 )
+texture = ExtResource( 4 )
+
+[node name="HubL" type="Sprite" parent="."]
+
+position = Vector2( -48, 0 )
+texture = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+autoplay = "flap"
+anims/RESET = SubResource( 2 )
+anims/flap = SubResource( 1 )
+

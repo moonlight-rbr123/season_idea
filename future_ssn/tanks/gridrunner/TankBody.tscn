@@ -1,0 +1,183 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://skins/shared/TankSkin.gd" type="Script" id=1]
+[ext_resource path="res://skins/shared/TankBodyCommon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://gfx/neo/lcwheel.png" type="Texture" id=3]
+[ext_resource path="res://gfx/neo/lcwheel-t.png" type="Texture" id=4]
+[ext_resource path="res://gfx/neo/gridrunner-back.png" type="Texture" id=5]
+[ext_resource path="res://gfx/neo/gridrunner-back-t1.png" type="Texture" id=6]
+[ext_resource path="res://gfx/neo/gridrunner-back-t2.png" type="Texture" id=7]
+[ext_resource path="res://gfx/neo/turret-rail.png" type="Texture" id=8]
+[ext_resource path="res://gfx/neo/turret-rail-t1.png" type="Texture" id=9]
+[ext_resource path="res://gfx/neo/turret-rail-t2.png" type="Texture" id=10]
+[ext_resource path="res://gfx/neo/gridrunner-front.png" type="Texture" id=11]
+[ext_resource path="res://gfx/neo/gridrunner-front-t1.png" type="Texture" id=12]
+[ext_resource path="res://gfx/neo/gridrunner-front-t2.png" type="Texture" id=13]
+
+[sub_resource type="Animation" id=1]
+resource_name = "RESET"
+length = 0.001
+loop = false
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1.0000, 1.0000 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -0.00 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "shoot"
+length = 0.35
+loop = false
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.0000, 1.0000 ), Vector2( 1.0700, 0.9400 ), Vector2( 1.0000, 1.0000 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "bob"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -0.00 ), Vector2( 0, -4.00 ), Vector2( 0, -0.00 ), Vector2( 0, -4.00 ), Vector2( 0, -0.00 ) ]
+}
+
+[node name="TankBody" type="Node2D"]
+
+z_index = 100
+script = ExtResource( 1 )
+_gun = NodePath("Body/Turret")
+_wheels = [ NodePath("Body/Wheel0"), NodePath("Body/Wheel1") ]
+_tinted_nodes = [ NodePath("Body/Wheel0/Wheel0Tint"), NodePath("Body/Wheel1/Wheel1Tint"), NodePath("Body/BackT1"), NodePath("Body/Turret/TurretT1"), NodePath("Body/FrontT1") ]
+_tint2_nodes = [ NodePath("Body/BackT2"), NodePath("Body/Turret/TurretT2"), NodePath("Body/FrontT2") ]
+tint_one = Color( 0.000000, 0.898039, 1.000000, 1 )
+tint_two = Color( 0.039216, 0.423529, 0.768627, 1 )
+_drive_animation_player = NodePath("DriveAnim")
+_shoot_animation_player = NodePath("AnimationPlayer")
+card_offset = Vector2( 0, 0 )
+
+[node name="Body" type="Node2D" parent="."]
+
+position = Vector2( 0, -0.00 )
+scale = Vector2( 1.0000, 1.0000 )
+
+[node name="Wheel0" type="Sprite" parent="Body"]
+
+position = Vector2( -118, 46 )
+texture = ExtResource( 3 )
+
+[node name="Wheel0Tint" type="Sprite" parent="Body/Wheel0"]
+
+self_modulate = Color( 0.000000, 0.898039, 1.000000, 1 )
+texture = ExtResource( 4 )
+
+[node name="Wheel1" type="Sprite" parent="Body"]
+
+position = Vector2( 118, 46 )
+texture = ExtResource( 3 )
+
+[node name="Wheel1Tint" type="Sprite" parent="Body/Wheel1"]
+
+self_modulate = Color( 0.000000, 0.898039, 1.000000, 1 )
+texture = ExtResource( 4 )
+
+[node name="Back" type="Sprite" parent="Body"]
+
+texture = ExtResource( 5 )
+
+[node name="BackT1" type="Sprite" parent="Body"]
+
+self_modulate = Color( 0.000000, 0.898039, 1.000000, 1 )
+texture = ExtResource( 6 )
+
+[node name="BackT2" type="Sprite" parent="Body"]
+
+self_modulate = Color( 0.039216, 0.423529, 0.768627, 1 )
+texture = ExtResource( 7 )
+
+[node name="Turret" type="Sprite" parent="Body"]
+
+position = Vector2( 0, 0 )
+rotation = -0.785398
+centered = false
+offset = Vector2( -240, -70 )
+texture = ExtResource( 8 )
+
+[node name="TurretT1" type="Sprite" parent="Body/Turret"]
+
+self_modulate = Color( 0.000000, 0.898039, 1.000000, 1 )
+centered = false
+offset = Vector2( -240, -70 )
+texture = ExtResource( 9 )
+
+[node name="TurretT2" type="Sprite" parent="Body/Turret"]
+
+self_modulate = Color( 0.039216, 0.423529, 0.768627, 1 )
+centered = false
+offset = Vector2( -240, -70 )
+texture = ExtResource( 10 )
+
+[node name="Front" type="Sprite" parent="Body"]
+
+texture = ExtResource( 11 )
+
+[node name="FrontT1" type="Sprite" parent="Body"]
+
+self_modulate = Color( 0.000000, 0.898039, 1.000000, 1 )
+texture = ExtResource( 12 )
+
+[node name="FrontT2" type="Sprite" parent="Body"]
+
+self_modulate = Color( 0.039216, 0.423529, 0.768627, 1 )
+texture = ExtResource( 13 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+anims/RESET = SubResource( 1 )
+anims/shoot = SubResource( 2 )
+
+[node name="DriveAnim" type="AnimationPlayer" parent="."]
+
+autoplay = "bob"
+playback_speed = 0.0
+anims/bob = SubResource( 3 )
+
+[node name="TankBodyCommon" parent="." instance=ExtResource( 2 )]
+
+z_as_relative = false
+

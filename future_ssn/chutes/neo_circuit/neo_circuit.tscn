@@ -1,0 +1,196 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://skins/parachutes/Parachute.gd" type="Script" id=1]
+[ext_resource path="res://gfx/neo/batwing-base.png" type="Texture" id=2]
+[ext_resource path="res://gfx/particles/shine1.png" type="Texture" id=9]
+[ext_resource path="res://gfx/neo/batwing-tint.png" type="Texture" id=3]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Wing:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Wing:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.7 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Wing2:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Wing2:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -0.5, 0.7 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "flap"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Wing:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 61.4639, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Wing:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.4, 0.6 ), Vector2( 0.7, 0.7 ), Vector2( 0.4, 0.6 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Wing2:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -61.0087, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Wing2:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -0.4, 0.6 ), Vector2( -0.7, 0.7 ), Vector2( -0.4, 0.6 ) ]
+}
+
+[sub_resource type="Gradient" id=31]
+offsets = PoolRealArray( 0.0030303, 0.734848, 1 )
+colors = PoolColorArray( 1, 1, 1, 0.976471, 0.989308, 0.992872, 0.996436, 0.532755, 0.976471, 0.984314, 0.992157, 0 )
+
+[sub_resource type="GradientTexture" id=28]
+gradient = SubResource( 31 )
+
+[sub_resource type="Curve" id=32]
+_data = [ Vector2( 0.00141243, 0 ), 0.0, 5.63069, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=30]
+curve = SubResource( 32 )
+
+[sub_resource type="ParticlesMaterial" id=33]
+lifetime_randomness = 0.84
+emission_shape = 2
+emission_box_extents = Vector3( 80, 56, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+angular_velocity = 133.0
+angular_velocity_random = 0.54
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 74.1
+angle_random = 1.0
+scale_random = 1.0
+scale_curve = SubResource( 30 )
+color = Color( 1.9, 1.9, 1.9, 1 )
+color_ramp = SubResource( 28 )
+
+[node name="SteelbatWings" type="Node2D"]
+
+scale = Vector2( 3, 3 )
+script = ExtResource( 1 )
+_tinted_nodes = [ NodePath("Wing/wing-tint"), NodePath("Wing2/wing-tint") ]
+
+[node name="Wing" type="Sprite" parent="."]
+
+position = Vector2( 27.325, -6.33266 )
+scale = Vector2( 0.5, 0.7 )
+texture = ExtResource( 2 )
+offset = Vector2( 79.6373, -45.189 )
+
+[node name="wing-tint" type="Sprite" parent="Wing"]
+
+position = Vector2( 79.3974, -51.2645 )
+texture = ExtResource( 3 )
+
+[node name="Wing2" type="Sprite" parent="."]
+
+position = Vector2( -26.4561, -6.33266 )
+scale = Vector2( -0.5, 0.7 )
+texture = ExtResource( 2 )
+offset = Vector2( 79.6373, -45.189 )
+
+[node name="wing-tint" type="Sprite" parent="Wing2"]
+
+position = Vector2( 79.2723, -51.6586 )
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+autoplay = "flap"
+playback_speed = 1.5
+anims/RESET = SubResource( 1 )
+anims/flap = SubResource( 2 )
+
+[node name="Sparkles" type="Particles2D" parent="Wing"]
+
+position = Vector2( 79.6, -45.2 )
+amount = 7
+lifetime = 2.0
+randomness = 0.8
+local_coords = true
+process_material = SubResource( 33 )
+texture = ExtResource( 9 )
+
+[node name="Sparkles" type="Particles2D" parent="Wing2"]
+
+position = Vector2( 79.6, -45.2 )
+amount = 7
+lifetime = 2.0
+randomness = 0.8
+local_coords = true
+process_material = SubResource( 33 )
+texture = ExtResource( 9 )
